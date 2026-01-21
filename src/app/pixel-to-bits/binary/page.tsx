@@ -57,7 +57,8 @@ export default function BinaryViewPage() {
     const processImage = (url: string) => {
         const img = new window.Image();
         img.onload = () => {
-            // Limit size for performance (larger for full binary view)\n            const maxSize = 300;
+            // Limit size for performance (larger for full binary view)
+            const maxSize = 300;
             let width = img.width;
             let height = img.height;
 
