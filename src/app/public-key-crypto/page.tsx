@@ -205,11 +205,16 @@ export default function DynamicCryptoChat() {
             <div className="mx-auto max-w-[1600px] space-y-8">
                 <header className="flex items-center justify-between pb-6 border-b">
                     <div className="flex items-center gap-6">
-                        <Button variant="outline" size="icon" onClick={() => window.location.href = '/'} className="cursor-pointer h-10 w-10 rounded-full hover:bg-muted">
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => window.location.href = '/'}
+                            className="cursor-pointer h-10 w-10 rounded-full hover:bg-secondary/50 border-border/50"
+                        >
                             <ArrowLeft className="h-5 w-5" />
                         </Button>
                         <div>
-                            <h1 className="text-3xl font-bold tracking-tight">Public Key Cryptography Playground</h1>
+                            <h1 className="text-3xl font-serif font-medium tracking-tight">Public Key Cryptography Playground</h1>
                             <p className="text-base text-muted-foreground mt-1">Interactive simulation: Encrypt with Public Keys, Decrypt with Private Keys</p>
                         </div>
                     </div>

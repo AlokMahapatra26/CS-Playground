@@ -3,13 +3,34 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Lightbulb } from 'lucide-react';
+import { ArrowLeft, Lightbulb, Play, Pause } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function BinaryVisualization() {
     // State for 8 bits, initialized to 0 (false)
     // Index 0 is MSB (128), Index 7 is LSB (1)
     const [bits, setBits] = useState<boolean[]>(new Array(8).fill(false));
+    const [autoMode, setAutoMode] = useState<'idle' | 'increment' | 'decrement'>('idle');
+
+    const updateBitsFromValue = (val: number) => {
+        return new Array(8).fill(false).map((_, i) => ((val >> (7 - i)) & 1) === 1);
+    };
+
+    React.useEffect(() => {
+        if (autoMode === 'idle') return;
+
+        const interval = setInterval(() => {
+            setBits(prevBits => {
+                const currentVal = prevBits.reduce((acc, bit, index) => acc + (bit ? Math.pow(2, 7 - index) : 0), 0);
+                const nextVal = autoMode === 'increment'
+                    ? (currentVal + 1) % 256
+                    : (currentVal - 1 + 256) % 256;
+                return updateBitsFromValue(nextVal);
+            });
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [autoMode]);
 
     const toggleBit = (index: number) => {
         const newBits = [...bits];
@@ -41,6 +62,15 @@ export default function BinaryVisualization() {
 
     const reset = () => {
         setBits(new Array(8).fill(false));
+        setAutoMode('idle');
+    };
+
+    const toggleAuto = (mode: 'increment' | 'decrement') => {
+        if (autoMode === mode) {
+            setAutoMode('idle');
+        } else {
+            setAutoMode(mode);
+        }
     };
 
 
@@ -141,15 +171,45 @@ export default function BinaryVisualization() {
 
                         {/* Controls */}
                         <div className="mt-12 flex flex-col md:flex-row items-center justify-center gap-4">
-                            <Button onClick={decrement} variant="outline" className="w-full md:w-auto rounded-full px-8 h-12 text-base hover:bg-secondary/50 border border-border/50 cursor-pointer">
-                                Count Down (-1)
-                            </Button>
+                            <div className="flex items-center gap-2 w-full md:w-auto">
+                                <Button
+                                    onClick={() => toggleAuto('decrement')}
+                                    variant="outline"
+                                    size="icon"
+                                    className={cn(
+                                        "h-12 w-12 rounded-full border border-border/50 cursor-pointer transition-all",
+                                        autoMode === 'decrement' ? "bg-primary text-primary-foreground border-primary" : "hover:bg-secondary/50"
+                                    )}
+                                    title="Auto Decrement (1s)"
+                                >
+                                    {autoMode === 'decrement' ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5 rotate-180" />}
+                                </Button>
+                                <Button onClick={decrement} variant="outline" className="flex-1 md:flex-none rounded-full px-6 h-12 text-base hover:bg-secondary/50 border border-border/50 cursor-pointer">
+                                    Count Down (-1)
+                                </Button>
+                            </div>
+
                             <Button onClick={reset} variant="ghost" className="w-full md:w-auto rounded-full px-8 h-12 text-base text-muted-foreground hover:text-foreground hover:bg-secondary/50 border border-border/50 cursor-pointer">
                                 Reset
                             </Button>
-                            <Button onClick={increment} className="w-full md:w-auto rounded-full px-8 h-12 text-base shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all border border-primary/50 cursor-pointer">
-                                Count Up (+1)
-                            </Button>
+
+                            <div className="flex items-center gap-2 w-full md:w-auto">
+                                <Button onClick={increment} className="flex-1 md:flex-none rounded-full px-6 h-12 text-base shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all border border-primary/50 cursor-pointer">
+                                    Count Up (+1)
+                                </Button>
+                                <Button
+                                    onClick={() => toggleAuto('increment')}
+                                    variant="outline"
+                                    size="icon"
+                                    className={cn(
+                                        "h-12 w-12 rounded-full border border-border/50 cursor-pointer transition-all",
+                                        autoMode === 'increment' ? "bg-primary text-primary-foreground border-primary" : "hover:bg-secondary/50"
+                                    )}
+                                    title="Auto Increment (1s)"
+                                >
+                                    {autoMode === 'increment' ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+                                </Button>
+                            </div>
                         </div>
 
                         {/* Explanation Section */}
