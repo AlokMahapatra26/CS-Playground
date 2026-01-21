@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { ArrowRight, Lock, Network, Cpu } from 'lucide-react';
+import { ArrowRight, Lock, Cpu, Image } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -65,6 +65,31 @@ export default function Home() {
               <CardContent className="px-8 pb-8">
                 <p className="text-muted-foreground leading-relaxed">
                   Interactive 8-bit toggle to explore how binary numbers convert to decimal.
+                </p>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* Pixel to Bits Module */}
+          <Link href="/pixel-to-bits" className="group block h-full">
+            <Card className="h-full bg-card border border-border/50 transition-all duration-300 hover:border-foreground/20 hover:bg-secondary/30 rounded-[2rem] shadow-sm hover:shadow-md">
+              <CardHeader className="space-y-4 p-8">
+                <div className="h-14 w-14 flex items-center justify-center border border-border/50 rounded-2xl bg-background shadow-sm group-hover:scale-110 transition-transform duration-300">
+                  <Image className="h-6 w-6 text-foreground/80" />
+                </div>
+                <div className="space-y-2">
+                  <CardTitle className="text-2xl font-serif font-medium flex items-center gap-2">
+                    Pixel to Bits
+                    <ArrowRight className="h-5 w-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 rounded-full bg-foreground/5 p-1" />
+                  </CardTitle>
+                  <CardDescription className="text-base text-muted-foreground">
+                    Image to Binary Visualization
+                  </CardDescription>
+                </div>
+              </CardHeader>
+              <CardContent className="px-8 pb-8">
+                <p className="text-muted-foreground leading-relaxed">
+                  Upload an image and explore how each pixel becomes RGB values and binary data.
                 </p>
               </CardContent>
             </Card>

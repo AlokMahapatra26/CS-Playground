@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Lightbulb, Play, Pause } from 'lucide-react';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 export default function BinaryVisualization() {
@@ -81,17 +82,20 @@ export default function BinaryVisualization() {
                 {/* Header */}
                 <header className="flex items-center justify-between pb-6 border-b border-border/40">
                     <div className="flex items-center gap-6">
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => window.location.href = '/'}
-                            className="cursor-pointer h-10 w-10 rounded-full hover:bg-secondary/50 border-border/50"
-                        >
-                            <ArrowLeft className="h-5 w-5" />
-                        </Button>
-                        <div>
-                            <h1 className="text-3xl font-serif font-medium tracking-tight">Binary Explorer</h1>
-                            <p className="text-base text-muted-foreground mt-1">Interactive 8-bit Byte Visualization</p>
+                        <div className="flex items-center gap-6">
+                            <Link href="/">
+                                <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="cursor-pointer h-10 w-10 rounded-full hover:bg-secondary/50 border-border/50"
+                                >
+                                    <ArrowLeft className="h-5 w-5" />
+                                </Button>
+                            </Link>
+                            <div>
+                                <h1 className="text-3xl font-serif font-medium tracking-tight">Binary Explorer</h1>
+                                <p className="text-base text-muted-foreground mt-1">Interactive 8-bit Byte Visualization</p>
+                            </div>
                         </div>
                     </div>
                 </header>

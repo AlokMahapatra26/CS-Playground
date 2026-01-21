@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Lock, Unlock, RefreshCw, User, Globe, Send, Pencil, Plus, Trash2, ArrowLeft, X } from 'lucide-react';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 interface Message {
@@ -205,14 +206,15 @@ export default function DynamicCryptoChat() {
             <div className="mx-auto max-w-[1600px] space-y-8">
                 <header className="flex items-center justify-between pb-6 border-b">
                     <div className="flex items-center gap-6">
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => window.location.href = '/'}
-                            className="cursor-pointer h-10 w-10 rounded-full hover:bg-secondary/50 border-border/50"
-                        >
-                            <ArrowLeft className="h-5 w-5" />
-                        </Button>
+                        <Link href="/">
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="cursor-pointer h-10 w-10 rounded-full hover:bg-secondary/50 border-border/50"
+                            >
+                                <ArrowLeft className="h-5 w-5" />
+                            </Button>
+                        </Link>
                         <div>
                             <h1 className="text-3xl font-serif font-medium tracking-tight">Public Key Cryptography Playground</h1>
                             <p className="text-base text-muted-foreground mt-1">Interactive simulation: Encrypt with Public Keys, Decrypt with Private Keys</p>
